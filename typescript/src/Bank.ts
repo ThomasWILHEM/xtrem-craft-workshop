@@ -4,7 +4,7 @@ import { MissingExchangeRateError } from './MissingExchangeRateError'
 export class Bank {
   private readonly _exchangeRates: Map<string, number> = new Map()
 
-  static initBank (currency1: Currency, currency2: Currency, rate: number): Bank {
+  static withExchangeRate (currency1: Currency, currency2: Currency, rate: number): Bank {
     const bank = new Bank()
     bank.addExchangeRate(currency1, currency2, rate)
     return bank
