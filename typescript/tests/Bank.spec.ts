@@ -27,6 +27,5 @@ describe('Bank', function () {
     bank.addExchangeRate(Currency.EUR, Currency.USD, 1.3)
     const actual = bank.convert(10, Currency.EUR, Currency.USD)
     expect(actual).not.toBe(initialConversion)
-
   })
 })
