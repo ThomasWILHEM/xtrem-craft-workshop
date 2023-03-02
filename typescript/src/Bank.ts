@@ -4,22 +4,12 @@ import { MissingExchangeRateError } from './MissingExchangeRateError'
 export class Bank {
   private readonly _exchangeRates: Map<string, number> = new Map()
 
-  /**
-   * @param currency1
-   * @param currency2
-   * @param rate
-   */
   static initBank (currency1: Currency, currency2: Currency, rate: number): Bank {
     const bank = new Bank()
     bank.addExchangeRate(currency1, currency2, rate)
     return bank
   }
 
-  /**
-   * @param currency1
-   * @param currency2
-   * @param rate
-   */
   addExchangeRate (currency1: Currency, currency2: Currency, rate: number): void {
     this._exchangeRates.set(currency1 + '->' + currency2, rate)
   }
