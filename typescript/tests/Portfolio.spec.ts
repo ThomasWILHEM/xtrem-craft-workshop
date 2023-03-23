@@ -3,23 +3,15 @@ import { Bank } from '../src/Bank'
 import {Money} from "../src/Money";
 
 class Portfolio {
-  private readonly count: Array<{ amount: number, currency: Currency}> = []
   private moneys: Money[] = [];
 
-  add (amount: number, currency: Currency): void {
-    const money = new Money(amount, currency)
-
+  add (money: Money): void {
     this.moneys.push(money)
-    this.count.push({ amount: amount, currency: currency })
   }
 
   evaluate (to: Currency, bank: Bank): number {
-    return this.count.reduce((acc: number, cur: Money): number => {
+    return this.moneys.reduce((acc: number, cur: Money): number => {
       return acc + bank.convert(cur, to).amount
-    }, 0)
-
-    return this.count.reduce((acc: number, cur: {amount: number, currency: Currency}): number => {
-      return acc + bank.convert(new Money(cur.amount, cur.currency), to).amount
     }, 0)
   }
 }
@@ -30,8 +22,8 @@ describe('Portfolio', function () {
   test('5 USD + 10 EUR = 17 USD', () => {
     // Arange
     const portfolio = new Portfolio()
-    portfolio.add(5, Currency.USD)
-    portfolio.add(10, Currency.EUR)
+    portfolio.add(new Money(5, Currency.USD))
+    portfolio.add(new Money(10, Currency.EUR))
 
     // Act
     const result = portfolio.evaluate(Currency.USD, bank)
@@ -44,8 +36,8 @@ describe('Portfolio', function () {
     // Arange
     const bank = Bank.withExchangeRate(Currency.USD, Currency.KRW, 1100)
     const portfolio = new Portfolio()
-    portfolio.add(1, Currency.USD)
-    portfolio.add(1100, Currency.KRW)
+    portfolio.add(new Money(1, Currency.USD))
+    portfolio.add(new Money(1100, Currency.KRW))
 
     // Act
     const result = portfolio.evaluate(Currency.KRW, bank)
@@ -59,8 +51,8 @@ describe('Portfolio', function () {
     const bank = Bank.withExchangeRate(Currency.USD, Currency.KRW, 1100)
     bank.addExchangeRate(Currency.EUR, Currency.KRW, 1344)
     const portfolio = new Portfolio()
-    portfolio.add(5, Currency.USD)
-    portfolio.add(10, Currency.EUR)
+    portfolio.add(new Money(5, Currency.USD))
+    portfolio.add(new Money(10, Currency.EUR))
 
     // Act
     const result = portfolio.evaluate(Currency.KRW, bank)
@@ -80,7 +72,7 @@ describe('Portfolio', function () {
   it('', () => {
     // Arange
     const portfolio = new Portfolio()
-    portfolio.add(5, Currency.USD)
+    portfolio.add(new Money(5, Currency.USD))
 
     // Act
     const result = portfolio.evaluate(Currency.USD, bank)
