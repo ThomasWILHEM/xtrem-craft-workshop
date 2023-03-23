@@ -15,4 +15,12 @@ describe('Money', function () {
     const money: Money = new Money(10, Currency.EUR)
     expect(() => money.add(new Money(2, Currency.USD))).toThrow(WrongCurrencyException).toThrow('EUR != USD')
   })
+
+  test('Times Money', () => {
+    const money: Money = new Money(10, Currency.EUR)
+    const multiplication = money.times(5)
+
+    expect(money).toEqual(new Money(10, Currency.EUR))
+    expect(multiplication).toEqual(new Money(50, Currency.EUR))
+  })
 })

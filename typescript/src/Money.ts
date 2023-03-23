@@ -15,4 +15,8 @@ export class Money {
     }
     return new Money(this.amount + money.amount, this.currency)
   }
+
+    times(number: number) {
+      return new Money(this.amount * number, this.currency)
+    }
 }
