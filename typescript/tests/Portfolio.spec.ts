@@ -32,7 +32,7 @@ describe('Portfolio', function () {
 
   test('1 USD + 1100 KRW = 2200 KRW', () => {
     // Arange
-    const bank = Bank.withExchangeRate(Currency.USD, Currency.KRW, 200)
+    const bank = Bank.withExchangeRate(Currency.USD, Currency.KRW, 1100)
     const portfolio = new Portfolio()
     portfolio.add(1, Currency.USD)
     portfolio.add(1100, Currency.KRW)
