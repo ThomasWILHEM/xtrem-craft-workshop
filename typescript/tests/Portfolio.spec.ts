@@ -1,5 +1,6 @@
 import { Currency } from '../src/Currency'
 import { Bank } from '../src/Bank'
+import {Money} from "../src/Money";
 
 class Portfolio {
   private readonly count: Array<{ amount: number, currency: Currency}> = []
@@ -9,7 +10,7 @@ class Portfolio {
 
   evaluate (to: Currency, bank: Bank): number {
     return this.count.reduce((acc: number, cur: {amount: number, currency: Currency}): number => {
-      return acc + bank.convertOld(cur.amount, cur.currency, to)
+      return acc + bank.convert(new Money(cur.amount, cur.currency), to).amount
     }, 0)
   }
 }
