@@ -4,11 +4,20 @@ import {Money} from "../src/Money";
 
 class Portfolio {
   private readonly count: Array<{ amount: number, currency: Currency}> = []
+  private moneys: Money[] = [];
+
   add (amount: number, currency: Currency): void {
+    const money = new Money(amount, currency)
+
+    this.moneys.push(money)
     this.count.push({ amount: amount, currency: currency })
   }
 
   evaluate (to: Currency, bank: Bank): number {
+    return this.count.reduce((acc: number, cur: Money): number => {
+      return acc + bank.convert(cur, to).amount
+    }, 0)
+
     return this.count.reduce((acc: number, cur: {amount: number, currency: Currency}): number => {
       return acc + bank.convert(new Money(cur.amount, cur.currency), to).amount
     }, 0)
