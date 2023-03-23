@@ -24,12 +24,12 @@ export class Bank {
   }
 
   convert (money: Money, to: Currency) {
-    if (!this._exchangeRates.has(money.currency + '->' + to)) {
+    if (!(money.currency === to || this._exchangeRates.has(money.currency + '->' + to))) {
       throw new MissingExchangeRateError(money.currency, to)
     }
 
     return money.currency === to
-      ? money.amount
+      ? new Money(money.amount, to)
       : new Money(money.amount * this._exchangeRates.get(money.currency + '->' + to), to)
   }
 }

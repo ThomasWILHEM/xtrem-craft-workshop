@@ -1,6 +1,6 @@
-import { Currency } from '../src/Currency'
-import { Bank } from '../src/Bank'
-import { MissingExchangeRateError } from '../src/MissingExchangeRateError'
+import {Currency} from '../src/Currency'
+import {Bank} from '../src/Bank'
+import {MissingExchangeRateError} from '../src/MissingExchangeRateError'
 import {Money} from "../src/Money";
 
 describe('Bank', function () {
@@ -22,6 +22,11 @@ describe('Bank', function () {
   test('convert from usd to usd returns same value', () => {
     const conversion = bank.convertOld(10, Currency.EUR, Currency.EUR)
     expect(conversion).toBe(10)
+  })
+
+  test('convert from eur to eur returns same value', () => {
+    const conversion = bank.convert(new Money(10, Currency.EUR), Currency.EUR)
+    expect(conversion).toEqual(new Money(10, Currency.EUR))
   })
 
   test('convert throws error in case of missing exchange rates', () => {
