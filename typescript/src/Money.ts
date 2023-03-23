@@ -1,4 +1,5 @@
 import { Currency } from './Currency'
+import {WrongCurrencyException} from "./WrongCurrencyException";
 
 export class Money {
   private amount: number
@@ -9,6 +10,9 @@ export class Money {
   }
 
   add (money: Money): Money {
+    if(this.currency !== money.currency){
+      throw new WrongCurrencyException(this.currency, money.currency)
+    }
     return new Money(this.amount + money.amount, this.currency)
   }
 }
