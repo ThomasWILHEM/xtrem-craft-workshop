@@ -33,6 +33,10 @@ describe('Bank', function () {
     expect(() => bank.convertOld(10, Currency.EUR, Currency.KRW)).toThrow(MissingExchangeRateError).toThrow('EUR -> KRW')
   })
 
+  test('convert throws error in case of missing exchange rates', () => {
+    expect(() => bank.convert(new Money(10, Currency.EUR), Currency.KRW)).toThrow(MissingExchangeRateError).toThrow('EUR -> KRW')
+  })
+
   test('convert with different exchange rates returns different numbers', () => {
     const initialConversion = bank.convertOld(10, Currency.EUR, Currency.USD)
     bank.addExchangeRate(Currency.EUR, Currency.USD, 1.3)
