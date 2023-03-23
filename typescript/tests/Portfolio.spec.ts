@@ -1,12 +1,15 @@
 import { Currency } from '../src/Currency'
 import { Bank } from '../src/Bank'
-import {Money} from "../src/Money";
+import { Money } from '../src/Money'
 
 class Portfolio {
-  private moneys: Money[] = [];
+  public moneys: Money[] = []
 
-  add (money: Money): void {
-    this.moneys.push(money)
+  add (money: Money): Portfolio {
+    if (!this.moneys.some(x => x === money)) {
+      this.moneys.push(money)
+    }
+    return aPortfolioWith(this.moneys)
   }
 
   evaluate (to: Currency, bank: Bank): number {
@@ -16,12 +19,10 @@ class Portfolio {
   }
 }
 
-function aPortfolioWith(...moneys) {
+function aPortfolioWith (...moneys): Portfolio {
   const portfolio = new Portfolio()
-  moneys.forEach((money) => {
-    portfolio.add(money)
-  })
-  return portfolio;
+  portfolio.moneys = moneys
+  return portfolio
 }
 
 describe('Portfolio', function () {
@@ -30,21 +31,27 @@ describe('Portfolio', function () {
   test('5 USD + 10 EUR = 17 USD', () => {
     // Arange
     const portfolio = new Portfolio()
-    portfolio.add(new Money(5, Currency.USD))
-    portfolio.add(new Money(10, Currency.EUR))
+    const portfolio1 = portfolio.add(new Money(5, Currency.USD))
+    const portfolio2 = portfolio1.add(new Money(10, Currency.EUR))
 
     // Act
-    const result = portfolio.evaluate(Currency.USD, bank)
+    const result1 = portfolio1.evaluate(Currency.USD, bank)
 
     // Assert
-    expect(result).toBe(17)
+    expect(result1).toBe(5)
+
+    // Act
+    const result2 = portfolio2.evaluate(Currency.USD, bank)
+
+    // Assert
+    expect(result2).toBe(17)
   })
 
   test('1 USD + 1100 KRW = 2200 KRW', () => {
     // Arange
     const bank = Bank.withExchangeRate(Currency.USD, Currency.KRW, 1100)
-    let money1 = new Money(1, Currency.USD)
-    let money2 = new Money(1100, Currency.KRW)
+    const money1 = new Money(1, Currency.USD)
+    const money2 = new Money(1100, Currency.KRW)
     const portfolio = aPortfolioWith(money1, money2)
 
     // Act
@@ -59,9 +66,9 @@ describe('Portfolio', function () {
     const bank = Bank.withExchangeRate(Currency.USD, Currency.KRW, 1100)
     bank.addExchangeRate(Currency.EUR, Currency.KRW, 1344)
 
-    let money1 = new Money(5, Currency.USD);
-    let money2 = new Money(10, Currency.EUR);
-    const portfolio = aPortfolioWith(money1, money2);
+    const money1 = new Money(5, Currency.USD)
+    const money2 = new Money(10, Currency.EUR)
+    const portfolio = aPortfolioWith(money1, money2)
 
     // Act
     const result = portfolio.evaluate(Currency.KRW, bank)
@@ -79,7 +86,7 @@ describe('Portfolio', function () {
   })
 
   it('', () => {
-    let money = new Money(5, Currency.USD)
+    const money = new Money(5, Currency.USD)
     // Arange
     const portfolio = aPortfolioWith(money)
 
