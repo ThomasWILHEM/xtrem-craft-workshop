@@ -43,4 +43,11 @@ describe('Bank', function () {
     const actual = bank.convertOld(10, Currency.EUR, Currency.USD)
     expect(actual).not.toBe(initialConversion)
   })
+
+  test('convert with different exchange rates returns different numbers', () => {
+    const initialConversion = bank.convert(new Money(10, Currency.EUR), Currency.USD)
+    bank.addExchangeRate(Currency.EUR, Currency.USD, 1.3)
+    const actual = bank.convert(new Money(10, Currency.EUR), Currency.USD)
+    expect(actual).not.toBe(initialConversion)
+  })
 })
