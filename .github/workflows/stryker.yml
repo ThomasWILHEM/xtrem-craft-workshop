@@ -1,5 +1,4 @@
-name: NodeJS deps + tests
-
+name: Stryker tests
 on: [push]
 
 jobs:
