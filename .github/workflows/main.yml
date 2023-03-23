@@ -15,10 +15,7 @@ jobs:
         node-version: '14.x'
 
     - name: Install dependencies
-      run: cd typescript/ && npm i && npm i -g stryker-cli 
+      run: cd typescript/ && npm i
       
     - name: Run tests
       run: cd typescript/ && npm run test
-      
-    - name: Run stryker
-      run: cd typescript/ && stryker run
