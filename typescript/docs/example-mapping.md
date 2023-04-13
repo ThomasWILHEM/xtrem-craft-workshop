@@ -110,3 +110,19 @@ Given a bank with a EUR pivot currency
 When I convert 10 EUR to EUR
 Then I receive an error explaining that I am converting EUR with EUR
 ```
+
+### Le montant ne doit pas être infini
+
+----
+
+> Que ce passe t-il quand on converti un montant infini ?
+
+#### Convertir un montant infini
+
+```gherkin
+Given a bank with a EUR pivot currency
+When I convert INFINITY EUR to USD
+Then I receive an error about incorrect amount.
+```
+
+
