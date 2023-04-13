@@ -2,6 +2,7 @@ import {Currency} from '../src/Currency'
 import {Bank} from '../src/Bank'
 import {MissingExchangeRateError} from '../src/MissingExchangeRateError'
 import {BankBuilder} from "./BankBuilder";
+import {Money} from "../src/Money";
 
 const aBank = () => BankBuilder.aBank();
 
