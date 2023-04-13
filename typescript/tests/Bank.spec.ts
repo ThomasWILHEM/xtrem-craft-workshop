@@ -3,6 +3,7 @@ import {Bank} from '../src/Bank'
 import {MissingExchangeRateError} from '../src/MissingExchangeRateError'
 import {BankBuilder} from "./BankBuilder";
 import {Money} from "../src/Money";
+import { ImpossibleMultiplierException } from '../src/ImpossibleMultiplierException'
 
 const aBank = () => BankBuilder.aBank();
 
@@ -13,6 +14,11 @@ describe('Bank', function () {
         .withPivotCurrency(Currency.EUR)
         .withExchangeRate(Currency.USD, 1.2).build()
     bank = Bank.withExchangeRate(Currency.EUR, Currency.USD, 1.2)
+  })
+
+  test('exchange rate with multiplier equal to 0', () => {
+    const bank = Bank.withExchangeRate(Currency.EUR, Currency.USD, 0.0)
+    expect(() => bank.convert(new Money(10.0, Currency.EUR), Currency.USD)).toThrow(ImpossibleMultiplierException).toThrow('Multiplier: 0')
   })
 
   test('convert from eur to usd returns number', () => {

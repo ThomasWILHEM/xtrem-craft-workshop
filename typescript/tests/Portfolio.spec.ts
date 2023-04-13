@@ -1,6 +1,7 @@
 import { Currency } from '../src/Currency'
 import { Bank } from '../src/Bank'
 import { Money } from '../src/Money'
+import { ImpossibleMultiplierException } from '../src/ImpossibleMultiplierException'
 
 class Portfolio {
   public moneys: Money[] = []
