@@ -3,8 +3,8 @@ import { WrongCurrencyException } from './WrongCurrencyException'
 import { IncorrectDividerException } from './IncorrectDividerException'
 
 export class Money {
-  private readonly amount: number
-  private readonly currency: Currency
+  readonly amount: number
+  readonly currency: Currency
   constructor (amount: number, currency: Currency) {
     this.amount = amount
     this.currency = currency
